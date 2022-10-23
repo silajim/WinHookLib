@@ -25,7 +25,7 @@ public:
     QMap<QString,QUrl> getWindows();
 
 signals:
-    void ForeGroundWindowChanged(QString path, QRect size);
+    void ForeGroundWindowChanged(QString path, QRect size, bool fullscreen);
 
 private:
     HWINEVENTHOOK g_hook=nullptr;

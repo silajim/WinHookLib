@@ -56,8 +56,15 @@ void WindowsWindows::Wineventproc(HWINEVENTHOOK hWinEventHook, DWORD event, HWND
         QRect rect(r.left,r.top,r.right - r.left , r.bottom - r.top);
         Windowname = new wchar_t[length + 1];
         GetWindowTextW(hwnd,&Windowname[0],length+1);
+        QUERY_USER_NOTIFICATION_STATE  state;
+        HRESULT res = SHQueryUserNotificationState(&state);
+        if(res!= S_OK){
+            state = QUNS_NOT_PRESENT;
+        }
+        bool fullscreen = false;
+        fullscreen = (state == QUNS_BUSY) || (state == QUNS_RUNNING_D3D_FULL_SCREEN) || (state == QUNS_PRESENTATION_MODE);
         std::wcout << L"Window Name " << Windowname << L" Path " << getWindowPath(hwnd) << std::endl;
-        m_windows->ForeGroundWindowChanged(QString::fromStdWString(getWindowPath(hwnd)),rect);
+        m_windows->ForeGroundWindowChanged(QString::fromStdWString(getWindowPath(hwnd)),rect,fullscreen);
     }
 }
 
