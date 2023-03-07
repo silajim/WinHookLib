@@ -16,7 +16,9 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 
 add_library(WinHookLib STATIC  "windowswindows.h"  "windowswindows.cpp" )
 
-target_link_libraries(WinHookLib  Qt${QT_VERSION_MAJOR}::Core psapi)
+target_link_libraries(WinHookLib  Qt${QT_VERSION_MAJOR}::Core psapi dwmapi)
+
+target_include_directories(WinHookLib PUBLIC ${CMAKE_CURRENT_LIST_DIR})
 
 #add_executable(WinHook main.cpp)
 #target_link_libraries(WinHook Qt${QT_VERSION_MAJOR}::Core psapi)
